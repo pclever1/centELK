@@ -22,7 +22,7 @@ yum install wget
 wget -O - https://raw.githubusercontent.com/pclever1/centELK/master/install.sh | bash <(cat) </dev/tty
 ```
 
-### 23. Set-up Kibana
+### Set-up Kibana
 - In your web browser go to the ELK local IP using port 5601
 - Click the gear icon in the bottom left
 - Click Kibana -> Index Patters
