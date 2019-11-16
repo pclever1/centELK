@@ -1,1 +1,1 @@
-sed "s:9200:00:g" /etc/elasticsearch/elasticsearch.yml
+sed -i 's/#http.port: 9200/http.port: 9200/g' /etc/elasticsearch/elasticsearch.yml
