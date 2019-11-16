@@ -40,6 +40,10 @@ sed -i "s/localhost/$ip/g" /etc/kibana/kibana.yml
 sed -i "s/localhost/$ip/g" /etc/logstash/conf.d/50-outputs.conf
 sed -i "s/localhost/$ip/g" /etc/logstash/conf.d/50-outputs.conf
 
+
+echo '-------------------------'
+echo '-------------------------'
+echo '-------------------------'
 read -p 'Enter your pfSense IP address: ' pfip
 pfip=$(eval echo $pfip | sed 's/\./\\\\\\./g')
 sed -i "s/172\\\.22\\\.33\\\.1/$pfip/g" /etc/logstash/conf.d/05-syslog.conf
@@ -50,8 +54,15 @@ sed -i "s/172\\\.22\\\.33\\\.1/$pfip/g" /etc/logstash/conf.d/05-syslog.conf
 /bin/systemctl enable elasticsearch.service
 /bin/systemctl enable kibana.service
 /bin/systemctl enable logstash.service
+
 systemctl stop firewalld
+systemctl disable firewalld
 
 systemctl start elasticsearch 
 systemctl start kibana 
 systemctl start logstash 
+
+echo
+echo '-------------------------'
+echo "Your ELK is now running, you can access it at $ip:5601"
+echo '-------------------------'
