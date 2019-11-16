@@ -1,4 +1,6 @@
-echo 'start'
-read -p 'What is your pfSense IP: ' pfip
-echo $pfip
-echo 'end'
+#!/bin/bash
+# Ask the user for login details
+read -p 'Username: ' uservar
+read -sp 'Password: ' passvar
+echo
+echo Thankyou $uservar we now have your login details
