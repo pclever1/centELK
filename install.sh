@@ -1,9 +1,11 @@
-yum install java
-yum install wget
+yum -y install java
+yum -y install wget
 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 cd /etc/yum.repos.d/
 sudo wget https://raw.githubusercontent.com/pclever1/centELK/master/elasticsearch.repo
-yum install elasticsearch && yum install kibana && yum install logstash
+yum -y install elasticsearch
+yum -y install kibana
+yum -y install logstash
 cd /etc/logstash/conf.d
 sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/01-inputs.conf
 sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/05-syslog.conf
