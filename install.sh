@@ -12,7 +12,9 @@ yum -y remove geoip
 wget https://github.com/maxmind/geoipupdate/releases/download/v4.1.5/geoipupdate_4.1.5_linux_amd64.rpm
 rpm -i ~/geoipupdate_4.1.5_linux_amd64.rpm
 cd /etc/
-sudo wget https://raw.githubusercontent.com/pclever1/centELK/master/GeoIP.conf
+
+sed -i "s/FIND/EditionIDs GeoLite2-City GeoLite2-Country GeoLite2-ASN/g" /etc/GeoIP.conf
+
 geoipupdate
 cd /etc/cron.weekly/
 sudo wgethttps://raw.githubusercontent.com/pclever1/centELK/master/geoipupdate
@@ -42,21 +44,13 @@ sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/patterns
 #check local IP
 ip=$(eval "ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'")
 
-#configure elasticsearch
-sed -i "s/#network.host: 192.168.0.1/network.host: $ip/g" /etc/elasticsearch/elasticsearch.yml
-sed -i 's/#http.port: 9200/http.port: 9200/g' /etc/elasticsearch/elasticsearch.yml
-sed -i "s/#discovery.seed_hosts/discovery.seed_hosts/g" /etc/elasticsearch/elasticsearch.yml
-sed -i "s/host1/127.0.0.1/g" /etc/elasticsearch/elasticsearch.yml
-sed -i "s/host2/$ip/g" /etc/elasticsearch/elasticsearch.yml
 
 #configure kibana
 sed -i "s/#server.port: 5601/server.port: 5601/g" /etc/kibana/kibana.yml
 sed -i "s/#server.host/server.host/g" /etc/kibana/kibana.yml
-sed -i "s/#elasticsearch.host/elasticsearch.host/g" /etc/kibana/kibana.yml
 sed -i "s/localhost/$ip/g" /etc/kibana/kibana.yml
 
 #configure logstash
-sed -i "s/localhost/$ip/g" /etc/logstash/conf.d/50-outputs.conf
 clear
 echo '-------------------------'
 echo '-------------------------'
@@ -81,6 +75,7 @@ systemctl start elasticsearch
 systemctl start kibana 
 systemctl start logstash 
 
+clear
 echo
 echo '-------------------------'
 echo "Install has completed."
