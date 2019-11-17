@@ -3,18 +3,17 @@ if [ "$EUID" -ne 0 ]
   then echo "Please run as root"
   exit
 fi
+yum -y update
 yum -y install java
 yum -y install net-tools
 
 #install geoIP
-cd ~
-yum -y remove geoip
-wget https://github.com/maxmind/geoipupdate/releases/download/v4.1.5/geoipupdate_4.1.5_linux_amd64.rpm
-rpm -i ~/geoipupdate_4.1.5_linux_amd64.rpm
+#cd ~
+#yum -y remove geoip
+#wget https://github.com/maxmind/geoipupdate/releases/download/v4.1.5/geoipupdate_4.1.5_linux_amd64.rpm
+#rpm -i ~/geoipupdate_4.1.5_linux_amd64.rpm
 cd /etc/
-
-sed -i "s/FIND/EditionIDs GeoLite2-City GeoLite2-Country GeoLite2-ASN/g" /etc/GeoIP.conf
-
+sed -i "s/EditionIDs GeoLite2-Country GeoLite2-City/EditionIDs GeoLite2-City GeoLite2-Country GeoLite2-ASN/g" /etc/GeoIP.conf
 geoipupdate
 cd /etc/cron.weekly/
 sudo wgethttps://raw.githubusercontent.com/pclever1/centELK/master/geoipupdate
